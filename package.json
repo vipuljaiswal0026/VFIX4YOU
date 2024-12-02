@@ -1,0 +1,20 @@
+{
+  "name": "vfix4u-project",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run start:authentication",
+    "start:authentication": "npm --prefix services/authentication start",
+    "start:booking": "npm --prefix services/booking start",
+    "start:service-management": "npm --prefix services/service-management start",
+    "start:user": "npm --prefix services/user start"
+  },
+  "workspaces": [
+    "services/authentication"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

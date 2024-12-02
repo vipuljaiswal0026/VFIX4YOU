@@ -1,6 +1,6 @@
 const jwt = require("jwt-simple");
 const bcrypt = require("bcryptjs");
-const User = require("../models/User");
+const User = require("./UserModel");
 const passport = require("passport");
 
 const registerUser = async (req, res) => {

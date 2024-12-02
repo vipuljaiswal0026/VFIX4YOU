@@ -3,7 +3,7 @@ const passport = require("passport");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const authRoutes = require("./routes/authRoutes");
+const authRoutes = require("./authRoutes");
 
 dotenv.config();
 
@@ -17,11 +17,24 @@ app.use(passport.initialize());
 // Routes
 app.use("/api/auth", authRoutes);
 
-// Database Connection
-mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.log(err));
+// Database Connection and Server Start
+const connectDB = async () => {
+  try {
+    // Wait for MongoDB connection
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("Connected to MongoDB");
 
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => console.log(`Authentication Service running on port ${PORT}`));
+    // Start the server after DB connection
+    const PORT = process.env.PORT || 5001;
+    app.listen(PORT, () => console.log(`Authentication Service running on port ${PORT}`));
+  } catch (err) {
+    console.error("Database connection error:", err);
+    process.exit(1); // Exit the process with failure if DB connection fails
+  }
+};
+
+// Connect to DB and then start the server
+connectDB();
